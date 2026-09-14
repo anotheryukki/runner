@@ -335,6 +335,44 @@
     50%{ opacity:0; }
   }
 
+  .social-link{
+    position:fixed;
+    top:clamp(16px,3vh,28px);
+    right:clamp(16px,4vw,48px);
+    z-index:4;
+    width:42px;
+    height:42px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--glass);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    color:var(--paper);
+    text-decoration:none;
+    transition:transform .25s cubic-bezier(.16,.9,.3,1), background-color .25s ease, border-color .25s ease;
+  }
+  .social-link svg{ width:16px; height:16px; display:block; }
+  .social-link path{ fill:var(--paper); }
+  .social-link:hover{
+    transform:translateY(-2px) scale(1.06);
+    background:var(--glass-strong);
+    border-color:rgba(215,255,62,0.55);
+  }
+  .social-link:active{
+    transform:scale(0.94);
+  }
+  .social-link:focus-visible{
+    outline:2px solid var(--volt);
+    outline-offset:3px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .social-link{ transition:background-color .25s ease, border-color .25s ease; }
+    .social-link:hover{ transform:none; }
+  }
+
   footer.disclaimer{
     display:flex;
     align-items:center;
@@ -395,6 +433,10 @@
   <div class="grain"></div>
   <div class="speed-lines"></div>
   <div class="scrim"></div>
+
+  <a class="social-link" href="https://x.com/runner_pve" target="_blank" rel="noopener noreferrer" aria-label="RUNNER on X">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+  </a>
 
   <div class="stage">
     <main class="hero">
