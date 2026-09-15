@@ -251,7 +251,8 @@
     border-radius:999px;
     white-space:nowrap;
   }
-  .pill .pulse{
+  .pulse{
+    display:inline-block;
     width:6px;height:6px;border-radius:50%;
     background:var(--volt);
     box-shadow:0 0 8px 2px rgba(215,255,62,0.7);
@@ -274,7 +275,7 @@
   .bib{
     position:relative;
     margin-top:clamp(10px,1.8vh,18px);
-    width:min(300px, 76vw);
+    width:min(380px, 88vw);
     background:var(--glass-strong);
     border:1px solid var(--glass-border);
     backdrop-filter:blur(14px);
@@ -308,31 +309,80 @@
     border-bottom:1px dashed rgba(255,255,255,0.22);
     padding-bottom:8px;
   }
-  .bib-ca{
+  .bib-top span{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+  }
+  .ca-row{
     display:flex;
-    align-items:baseline;
-    justify-content:center;
+    align-items:center;
+    justify-content:space-between;
     gap:10px;
+  }
+  .ca-row + .ca-row{
+    margin-top:9px;
+    padding-top:9px;
+    border-top:1px dashed rgba(255,255,255,0.14);
+  }
+  .ca-row .ca-tag{
     font-family:'JetBrains Mono',monospace;
-  }
-  .bib-ca .label{
-    font-size:0.62rem;
-    letter-spacing:0.14em;
+    font-size:0.56rem;
+    letter-spacing:0.1em;
     text-transform:uppercase;
+    color:var(--ink);
+    background:var(--volt);
+    padding:3px 6px;
+    border-radius:4px;
+    flex-shrink:0;
+  }
+  .ca-row .ca-value{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.01em;
+    color:var(--paper);
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:1;
+    text-align:left;
+  }
+  .copy-btn{
+    flex-shrink:0;
+    width:26px;
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:6px;
+    background:transparent;
+    border:1px solid var(--glass-border);
     color:var(--mist);
+    cursor:pointer;
+    transition:transform .2s cubic-bezier(.16,.9,.3,1), background-color .2s ease, border-color .2s ease, color .2s ease;
+    padding:0;
   }
-  .bib-ca .value{
-    font-size:1.6rem;
-    font-weight:700;
-    letter-spacing:0.06em;
+  .copy-btn svg{ width:12px; height:12px; }
+  .copy-btn .icon-check{ display:none; }
+  .copy-btn.copied .icon-copy{ display:none; }
+  .copy-btn.copied .icon-check{ display:block; }
+  .copy-btn:hover{
+    background:var(--glass-strong);
+    border-color:rgba(215,255,62,0.5);
+    color:var(--paper);
+  }
+  .copy-btn:active{ transform:scale(0.9); }
+  .copy-btn:focus-visible{
+    outline:2px solid var(--volt);
+    outline-offset:2px;
+  }
+  .copy-btn.copied{
     color:var(--volt);
+    border-color:var(--volt);
   }
-  .bib-ca .value::after{
-    content:"_";
-    animation:blink 1s step-end infinite;
-  }
-  @keyframes blink{
-    50%{ opacity:0; }
+  @media (prefers-reduced-motion: reduce){
+    .copy-btn{ transition:background-color .2s ease, border-color .2s ease, color .2s ease; }
+    .copy-btn:active{ transform:none; }
   }
 
   .social-link{
@@ -396,7 +446,8 @@
     .badge-row{ gap:8px; }
     .pill{ padding:8px 12px; font-size:0.6rem; }
     footer.disclaimer p{ font-size:0.54rem; line-height:1.55; }
-    .bib{ width:min(260px, 82vw); }
+    .bib{ width:min(320px, 92vw); }
+    .ca-row .ca-value{ font-size:0.68rem; }
   }
 
   @media (max-height: 620px){
@@ -408,8 +459,7 @@
 
   @media (prefers-reduced-motion: reduce){
     .streak{ animation:none; width:112%; }
-    .pill .pulse{ animation:none; }
-    .bib-ca .value::after{ animation:none; }
+    .pulse{ animation:none; }
     #loader{ transition:none; }
   }
 </style>
@@ -457,8 +507,23 @@
       </div>
 
       <div class="bib">
-        <div class="bib-top"><span>$RUNNER</span><span>Awaiting gun</span></div>
-        <div class="bib-ca"><span class="label">CA</span><span class="value">SOON</span></div>
+        <div class="bib-top"><span>$RUNNER</span><span><span class="pulse"></span> Live</span></div>
+        <div class="ca-row">
+          <span class="ca-tag">Pump</span>
+          <span class="ca-value" title="HLPxavFpKo7obS9ZsfesLzBoY485GdJJQrorKJnvpump">HLPxav&hellip;nvpump</span>
+          <button type="button" class="copy-btn" data-ca="HLPxavFpKo7obS9ZsfesLzBoY485GdJJQrorKJnvpump" aria-label="Copy pump.fun contract address">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </button>
+        </div>
+        <div class="ca-row">
+          <span class="ca-tag">Stonk</span>
+          <span class="ca-value" title="4iYWMrT5ZcKrxFLrgqScbBQnZeZmyvYQ57zrYoCyLz8K">4iYWMr&hellip;CyLz8K</span>
+          <button type="button" class="copy-btn" data-ca="4iYWMrT5ZcKrxFLrgqScbBQnZeZmyvYQ57zrYoCyLz8K" aria-label="Copy stonk.fun contract address">
+            <svg class="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </button>
+        </div>
       </div>
     </main>
 
@@ -513,6 +578,35 @@
     setTimeout(finish, 5000);
 
     video.play().catch(function(){});
+  })();
+
+  (function(){
+    var buttons = document.querySelectorAll('.copy-btn');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var ca = btn.getAttribute('data-ca');
+        var reset = function(){
+          btn.classList.remove('copied');
+        };
+        function markCopied(){
+          btn.classList.add('copied');
+          clearTimeout(btn._copyTimer);
+          btn._copyTimer = setTimeout(reset, 1400);
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(ca).then(markCopied).catch(function(){});
+        } else {
+          var ta = document.createElement('textarea');
+          ta.value = ca;
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          try{ document.execCommand('copy'); markCopied(); }catch(e){}
+          document.body.removeChild(ta);
+        }
+      });
+    });
   })();
 </script>
 
